@@ -33,6 +33,10 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
     double bench_peak_temp_c;
     double bench_last_gflops;
     double bench_saved_idle_c;
+
+    int    fan_owner; /* 1 = Apple T2 (macOS), 2 = A2141 ThermalBoost */
+    NSString *fan_reason_text;
+    NSString *last_transition_text;
 }
 - (void)pushSnapshot:(const A2141Snapshot *)snap;
 @end
@@ -59,6 +63,9 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
         bench_peak_temp_c = 0.0;
         bench_last_gflops = 0.0;
         bench_saved_idle_c = 0.0;
+        fan_owner = 0;
+        fan_reason_text = @"Analizando quién controla las turbinas...";
+        last_transition_text = @"Sin cambios de control todavía";
     }
     return self;
 }
@@ -99,6 +106,38 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
     hist_fan_min[HISTORY_LEN - 1] = latest.fan0_min_rpm;
 
     if (hist_count < HISTORY_LEN) hist_count++;
+
+    /* Real-time fan controller attribution: Apple T2 (macOS) vs A2141 ThermalBoost */
+    int new_owner = (latest.kext_loaded && latest.fan0_min_rpm > 1950.0 &&
+                     latest.fan0_actual_rpm <= latest.fan0_min_rpm + 350.0) ? 2 : 1;
+
+    NSString *reason = nil;
+    if (new_owner == 2) {
+        reason = [NSString stringWithFormat:@"Subida proactiva de piso (%.0f RPM) por carga/calor (CPU %.1f °C) para evitar retraso de T2",
+                  latest.fan0_min_rpm, latest.tcxc_max_c];
+    } else if (latest.gpu_power_w >= 8.0 || latest.palm_temp_c >= 42.5) {
+        reason = [NSString stringWithFormat:@"Apple T2 pide %.0f RPM por GPU AMD activa (%.1f W) y base a %.1f °C; piso ThermalBoost libre (%.0f RPM)",
+                  latest.fan0_actual_rpm, latest.gpu_power_w, latest.palm_temp_c, latest.fan0_min_rpm];
+    } else if (latest.fan0_actual_rpm <= 2150.0) {
+        reason = [NSString stringWithFormat:@"Apple T2 en reposo silencioso estándar (%.0f RPM)",
+                  latest.fan0_actual_rpm];
+    } else {
+        reason = [NSString stringWithFormat:@"Apple T2 gestiona la curva nativa (%.0f RPM) por encima del piso mínimo (%.0f RPM)",
+                  latest.fan0_actual_rpm, latest.fan0_min_rpm];
+    }
+    fan_reason_text = reason;
+
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"HH:mm:ss"];
+    NSString *nowStr = [fmt stringFromDate:[NSDate date]];
+    NSString *who = (new_owner == 2) ? @"A2141 ThermalBoost" : @"Apple T2 (macOS)";
+    if (fan_owner != 0 && fan_owner != new_owner) {
+        last_transition_text = [NSString stringWithFormat:@"[%@] Cambio en vivo a %@", nowStr, who];
+    } else if (fan_owner == 0) {
+        last_transition_text = [NSString stringWithFormat:@"[%@] Inicio con %@", nowStr, who];
+    }
+    fan_owner = new_owner;
+
     [self setNeedsDisplay:YES];
 }
 
@@ -279,11 +318,12 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
         [NSString stringWithFormat:@"%.1f W  /  %.1f W", latest.phpc_power_w, latest.pz0e_budget_w],
         [NSString stringWithFormat:@"%.0f  ·  %.0f RPM", latest.fan0_actual_rpm, latest.fan1_actual_rpm]
     ];
+    NSString *fanOwnerTag = (fan_owner == 2) ? @"Control: ThermalBoost" : @"Control: Apple T2";
     NSArray *notes = @[
         [NSString stringWithFormat:@"Chasis: %.1f °C  ·  GPU AMD: %.1f °C", latest.palm_temp_c, latest.gpu_temp_c],
         [NSString stringWithFormat:@"Total Sistema: %.1f W  ·  Uso CPU: %.1f %%", latest.sys_power_w, latest.total_cpu_pct],
         @"Equilibrio CPU + GPU dentro del límite T2",
-        [NSString stringWithFormat:@"Piso mínimo objetivo: %.0f RPM", latest.fan0_min_rpm]
+        [NSString stringWithFormat:@"%@  ·  Piso: %.0f RPM", fanOwnerTag, latest.fan0_min_rpm]
     ];
     NSArray *colors = @[
         tempColor,
@@ -448,14 +488,18 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
     }
 
     [self drawText:afterLine
-                at:NSMakePoint(compBox.origin.x + 18, compBox.origin.y + 64)
+                at:NSMakePoint(compBox.origin.x + 18, compBox.origin.y + 62)
               font:smallMono
              color:colorFromHex(0x52B788)];
 
-    [self drawText:@"Autor: Juan José Monzón (@mylnzon58) · Herramienta gratuita y de código abierto (MIT) para MacBook Pro 16,1 A2141"
-                at:NSMakePoint(compBox.origin.x + 18, compBox.origin.y + 88)
-              font:subFont
-             color:colorFromHex(0x7D756B)];
+    NSString *fanControlLine = [NSString stringWithFormat:@"%@  ·  %@",
+                                fan_reason_text ?: @"",
+                                last_transition_text ?: @""];
+    NSColor *fanCtrlCol = (fan_owner == 2) ? colorFromHex(0x63B3ED) : colorFromHex(0xC9A45A);
+    [self drawText:fanControlLine
+                at:NSMakePoint(compBox.origin.x + 18, compBox.origin.y + 86)
+              font:labelFont
+             color:fanCtrlCol];
 }
 
 @end
