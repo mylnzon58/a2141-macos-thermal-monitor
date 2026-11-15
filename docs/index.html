@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A2141 Monitor — Gráficas de Núcleos, Temperatura y Turbinas</title>
+  <meta name="description" content="Aplicación nativa de macOS para visualizar los 6 núcleos, gráficas de temperatura en tiempo real, turbinas y consumo en la MacBook Pro 16,1 A2141 de 2019." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="canonical" href="https://mylnzon58.github.io/a2141-macos-thermal-monitor/" />
+  <link rel="alternate" hreflang="es" href="https://mylnzon58.github.io/a2141-macos-thermal-monitor/" />
+  <link rel="alternate" hreflang="en" href="https://mylnzon58.github.io/a2141-macos-thermal-monitor/#en" />
+  <link rel="alternate" hreflang="x-default" href="https://mylnzon58.github.io/a2141-macos-thermal-monitor/" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="mylnzon58 Systems Engineering" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="A2141 Monitor — Gráficas en Tiempo Real de Núcleos, Temperatura y Turbinas en macOS" />
+  <meta property="og:description" content="Monitor visual nativo para MacBook Pro 16,1 A2141 Core i7-9750H. Visualiza los 6 núcleos, 12 hilos, curvas térmicas, presupuesto T2 y turbinas para comparar el antes y después." />
+  <meta property="og:url" content="https://mylnzon58.github.io/a2141-macos-thermal-monitor/" />
+  <meta property="og:image" content="https://mylnzon58.github.io/a2141-macos-thermal-monitor/og-card-a2141-monitor.png" />
+  <meta property="og:image:width" content="1140" />
+  <meta property="og:image:height" content="720" />
+  <meta property="og:image:alt" content="Interfaz en vivo de A2141 Monitor mostrando los 6 núcleos y las 3 gráficas en tiempo real en macOS" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="A2141 Monitor — Gráficas de Núcleos, Temperatura y Turbinas en macOS" />
+  <meta name="twitter:description" content="Visualiza los 6 núcleos, consumo y turbinas en tiempo real y compara cómo andaba tu MacBook Pro 16,1 A2141 antes y después del ajuste térmico." />
+  <meta name="twitter:image" content="https://mylnzon58.github.io/a2141-macos-thermal-monitor/og-card-a2141-monitor.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://github.com/mylnzon58#person",
+        "name": "Juan José Monzón",
+        "alternateName": "mylnzon58",
+        "url": "https://github.com/mylnzon58",
+        "sameAs": [
+          "https://github.com/mylnzon58",
+          "https://www.linkedin.com/in/juan-m-97b85681/",
+          "https://www.patreon.com/JuanjoClassic"
+        ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://mylnzon58.github.io/a2141-macos-thermal-monitor/#app",
+        "name": "A2141 Monitor",
+        "operatingSystem": "macOS 10.15 - macOS 15",
+        "applicationCategory": "DeveloperApplication",
+        "license": "https://opensource.org/licenses/MIT",
+        "codeRepository": "https://github.com/mylnzon58/a2141-macos-thermal-monitor",
+        "author": { "@id": "https://github.com/mylnzon58#person" },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0c0a08;
+      --surface: #181512;
+      --stage: #221d18;
+      --ink: #f3efea;
+      --muted: #9e9589;
+      --accent: #c9a45a;
+      --good: #52b788;
+      --font-sans: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      font-variant-numeric: tabular-nums;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--ink); text-decoration: none; }
+    a:hover { color: var(--accent); }
+
+    code, pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .topbar {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 28px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .wordmark {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn-gold {
+      background-color: var(--accent);
+      color: #0c0a08;
+      font-weight: 600;
+      padding: 10px 20px;
+      display: inline-block;
+    }
+
+    .btn-gold:hover {
+      background-color: var(--ink);
+      color: #0c0a08;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 40px 32px 88px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .hero-copy {
+      grid-column: 1 / 6;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(34px, 4.2vw, 54px);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      font-size: 18px;
+      margin-bottom: 28px;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-preview {
+      grid-column: 6 / 13;
+      background-color: var(--surface);
+      padding: 18px;
+    }
+
+    .hero-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .section-block {
+      margin-bottom: 80px;
+    }
+
+    .section-block h2 {
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .arrow-flow {
+      background-color: var(--surface);
+      padding: 20px 24px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 32px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      background-color: var(--surface);
+      padding: 28px 24px;
+    }
+
+    .feature-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .code-step {
+      background-color: var(--surface);
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .code-step h3 {
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .code-step pre {
+      background-color: var(--bg);
+      padding: 18px;
+      overflow-x: auto;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .companion-strip {
+      background-color: var(--stage);
+      padding: 40px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .sponsor-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .sponsor-tile {
+      background-color: var(--surface);
+      padding: 20px;
+      display: block;
+    }
+
+    .sponsor-tile strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .sponsor-tile span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-copy, .hero-preview { grid-column: 1 / 13; }
+      .features-grid, .sponsor-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .features-grid, .sponsor-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor" class="wordmark">mylnzon58 / A2141 Monitor</a>
+    <nav class="nav-row" aria-label="Navegación principal">
+      <a href="#que-mide">Qué muestra</a>
+      <a href="#instalar">Instalación rápida</a>
+      <a href="#comparar">Cómo comparar</a>
+      <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Driver Térmico →</a>
+      <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor" class="btn-gold">Repositorio GitHub</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero-grid">
+      <div class="hero-copy">
+        <h1>Monitor visual de núcleos, temperatura y turbinas para MacBook A2141</h1>
+        <p>
+          Aplicación nativa y liviana en macOS para la <strong>MacBook Pro de 16 pulgadas de finales de 2019 con procesador Core i7-9750H</strong>. Muestra en tiempo real cómo trabajan los 6 núcleos, el consumo en Watts y las turbinas para corroborar de un vistazo cómo funcionaba tu equipo antes y cómo anda después de aplicar el ajuste térmico.
+        </p>
+        <div class="hero-links">
+          <a href="#instalar" class="btn-gold">Instalar en 1 minuto</a>
+          <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Ver el driver térmico complementario →</a>
+        </div>
+      </div>
+
+      <div class="hero-preview">
+        <img src="assets/monitor-live-preview.png" width="1140" height="720" alt="Ventana de A2141 Monitor en macOS mostrando los 6 núcleos, las 3 gráficas en tiempo real y el comparador objetivo" />
+      </div>
+    </section>
+
+    <section id="que-mide" class="section-block">
+      <h2>Todo lo que necesitas ver en una sola ventana</h2>
+      <div class="arrow-flow">
+        Barra superior en vivo  →  Mapa de los 6 núcleos y 12 hilos  →  3 gráficas en tiempo real  →  Prueba de 15 s para comparar Antes vs. Después
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <strong>6 núcleos y 12 hilos en vivo</strong>
+          <p>Muestra la temperatura individual de cada núcleo físico, el tope de frecuencia activo en MHz y las barras de carga de sus 12 hilos para verificar que el Núcleo 0 trabaje fresco a 3200 MHz mientras los demás suben hasta 4500 MHz.</p>
+        </div>
+        <div class="feature-card">
+          <strong>3 gráficas en tiempo real</strong>
+          <p>Dibuja segundo a segundo la curva de temperatura del procesador y chasis, el consumo en Watts frente al techo disponible en el chip T2 y las revoluciones de las dos turbinas.</p>
+        </div>
+        <div class="feature-card">
+          <strong>Comparador integrado de 15 s</strong>
+          <p>Incluye el botón "Medir 15s (Comparar)" que ejecuta una prueba de cálculo en los 12 hilos mientras ves las gráficas moverse en vivo y compara tus números contra el estado original sin ajuste.</p>
+        </div>
+        <div class="feature-card">
+          <strong>Cero fricción ni permisos extra</strong>
+          <p>Se instala en Aplicaciones y en la barra superior de macOS sin necesidad de desactivar SIP ni usar permisos especiales para monitorear. Además permite guardar una captura PNG con un clic.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="instalar" class="section-block">
+      <h2>Instalación rápida en un paso</h2>
+      <div class="arrow-flow">
+        Clonar el repositorio  →  Ejecutar ./install.sh  →  A2141 Monitor se abre en tu pantalla y en la barra superior
+      </div>
+
+      <div class="code-step">
+        <h3>Copia y pega en tu Terminal de macOS</h3>
+        <pre><code>xcode-select --install 2&gt;/dev/null || true
+git clone https://github.com/mylnzon58/a2141-macos-thermal-monitor.git
+cd a2141-macos-thermal-monitor
+chmod +x install.sh uninstall.sh
+./install.sh</code></pre>
+      </div>
+    </section>
+
+    <section id="comparar" class="companion-strip">
+      <div style="max-width: 64ch;">
+        <h2>¿Quieres aplicar también la solución térmica?</h2>
+        <p style="color: var(--muted); margin-top: 8px;">
+          Esta aplicación visual es el complemento directo de nuestro driver abierto para la MacBook Pro 16,1 A2141. Puedes medir primero tu equipo en estado original con este monitor, luego instalar el driver siguiendo su guía de 4 pasos y volver a medir para comprobar cuántos grados baja tu máquina.
+        </p>
+      </div>
+      <a href="https://mylnzon58.github.io/t2-macbook-pro-16-1-thermal-performance-fix-macos/" class="btn-gold">Ir a la guía del Driver Térmico →</a>
+    </section>
+
+    <section class="section-block">
+      <h2>Compartido con humildad por Juan Monzón</h2>
+      <p style="color: var(--muted); max-width: 68ch;">
+        Desarrollé este monitor y el ajuste térmico desde Argentina apoyándome en inteligencia artificial junto con pruebas cuidadosas paso a paso sobre mi propia MacBook Pro 2019, con la idea de que cualquiera que tenga este modelo pueda entender el problema y medir con claridad si la solución mejora su rendimiento.
+      </p>
+      <div class="sponsor-grid">
+        <a href="https://github.com/sponsors/mylnzon58" class="sponsor-tile">
+          <strong>GitHub Sponsors →</strong>
+          <span>github.com/sponsors/mylnzon58</span>
+        </a>
+        <a href="https://www.patreon.com/JuanjoClassic" class="sponsor-tile">
+          <strong>Patreon →</strong>
+          <span>patreon.com/JuanjoClassic</span>
+        </a>
+        <a href="https://tecito.app/juanjoclassic" class="sponsor-tile">
+          <strong>Invitar un Tecito →</strong>
+          <span>tecito.app/juanjoclassic</span>
+        </a>
+        <a href="https://www.linkedin.com/in/juan-m-97b85681/" class="sponsor-tile">
+          <strong>LinkedIn →</strong>
+          <span>Juan José Monzón</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

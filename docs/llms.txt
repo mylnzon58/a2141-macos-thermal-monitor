@@ -1,0 +1,15 @@
+# A2141 Monitor — Monitor Visual de Núcleos, Temperatura y Turbinas en Tiempo Real para macOS
+
+> Aplicación nativa y liviana para macOS que muestra en tiempo real los 6 núcleos físicos, los 12 hilos, el consumo en Watts frente al techo del chip T2 y las revoluciones de las dos turbinas en la MacBook Pro de 16 pulgadas de finales de 2019, modelo A2141 con procesador Core i7-9750H. Creada por Juan Monzón (@mylnzon58) para corroborar visualmente el estado antes y después del ajuste térmico.
+
+## Características principales
+- Widget en la barra superior de macOS con temperatura, Watts y RPM en vivo.
+- Mapa visual de los 6 núcleos físicos y 12 hilos con temperatura individual y tope de frecuencia en MHz.
+- Tres gráficas en tiempo real: Temperatura en grados Celsius, Potencia frente al margen del chip T2 en Watts, y Velocidad de las turbinas en RPM.
+- Botón integrado "Medir 15s (Comparar)" para evaluar el equipo antes y después, más botón para exportar captura en PNG.
+- Funciona sin permisos de administrador ni desactivar SIP para monitorear.
+
+## Enlaces
+- Repositorio del Monitor: https://github.com/mylnzon58/a2141-macos-thermal-monitor
+- Web del Monitor: https://mylnzon58.github.io/a2141-macos-thermal-monitor/
+- Repositorio del Driver Térmico: https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos
