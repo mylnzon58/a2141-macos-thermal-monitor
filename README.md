@@ -58,6 +58,9 @@ Ya incluimos la aplicación compilada con su ícono nativo de macOS en varios fo
 - **Archivo comprimido directo (`.zip`):**  
   **[Descargar A2141-ThermalMonitor-v1.1.0-macOS.zip](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-macOS.zip)**
 
+> **Si macOS muestra *"Apple no pudo verificar que A2141Monitor no contenga software malicioso"*:**  
+> Al ser software libre sin firma comercial paga de Apple, macOS bloquea la primera apertura de archivos descargados desde el navegador. Haz clic en **Listo**, abre **Ajustes del Sistema → Privacidad y Seguridad → Seguridad** y presiona **"Abrir de todas formas"** (o ejecuta `xattr -cr /Applications/A2141Monitor.app`).
+
 ### Opción por Terminal (usando el binario precompilado incluido en `prebuilt/`)
 
 ```bash
