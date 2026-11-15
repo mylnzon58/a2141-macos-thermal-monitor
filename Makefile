@@ -5,9 +5,9 @@ MACOS_DIR := $(APP_BUNDLE)/Contents/MacOS
 
 CC := clang
 CXX := clang++
-ARCH := -arch x86_64
-CFLAGS := $(ARCH) -O3 -march=native -Wall -Wextra -Wno-deprecated-declarations -Iinclude
-OBJCXXFLAGS := $(ARCH) -O3 -march=native -fobjc-arc -Wall -Wextra -Wno-deprecated-declarations -Iinclude
+ARCH := -arch x86_64 -mmacosx-version-min=12.0 -mavx2 -mfma
+CFLAGS := $(ARCH) -O3 -Wall -Wextra -Wno-deprecated-declarations -Iinclude
+OBJCXXFLAGS := $(ARCH) -O3 -fobjc-arc -Wall -Wextra -Wno-deprecated-declarations -Iinclude
 LDFLAGS := $(ARCH) -framework Cocoa -framework IOKit -framework QuartzCore -framework CoreFoundation -lpthread
 
 .PHONY: all clean run
@@ -20,6 +20,7 @@ $(MACOS_DIR)/$(APP_NAME): src/A2141MonitorApp.mm src/smc_bridge.c include/smc_br
 	$(CXX) $(OBJCXXFLAGS) -c src/A2141MonitorApp.mm -o $(BUILD_DIR)/A2141MonitorApp.o
 	$(CXX) $(BUILD_DIR)/smc_bridge.o $(BUILD_DIR)/A2141MonitorApp.o $(LDFLAGS) -o $(MACOS_DIR)/$(APP_NAME)
 	@cp resources/Info.plist $(APP_BUNDLE)/Contents/Info.plist
+	@codesign --force --deep --sign - $(APP_BUNDLE) 2>/dev/null || true
 	@echo "[+] Aplicacion nativa compilada en: $(APP_BUNDLE)"
 
 run: all

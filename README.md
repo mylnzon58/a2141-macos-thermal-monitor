@@ -43,21 +43,26 @@ Requisito        →  Herramientas de compilación de Xcode (xcode-select --inst
 
 ---
 
-## Instalación rápida en un paso
+## Descarga directa e instalación (Sin compilar)
 
-```
-Clonar el repositorio  →  Ejecutar ./install.sh  →  La app se abre sola en Aplicaciones y en la barra superior
-```
+Ya incluimos la aplicación compilada y lista para abrir en varios formatos para que no tengas que compilar código:
 
-Abre la Terminal y ejecuta:
+- **Imagen de disco (`.dmg` — Arrastrar a Aplicaciones):**  
+  **[Descargar A2141Monitor-v1.0.0-macOS-x86_64.dmg](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.dmg)**
+- **Instalador automático de macOS (`.pkg` — Doble clic):**  
+  **[Descargar A2141Monitor-v1.0.0-Installer.pkg](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-Installer.pkg)**
+- **Archivo comprimido directo (`.zip`):**  
+  **[Descargar A2141Monitor-v1.0.0-macOS-x86_64.zip](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.zip)**
+
+### Opción por Terminal (usando el binario precompilado incluido en `prebuilt/`)
 
 ```bash
-xcode-select --install 2>/dev/null || true
 git clone https://github.com/mylnzon58/a2141-macos-thermal-monitor.git
 cd a2141-macos-thermal-monitor
 chmod +x install.sh uninstall.sh
 ./install.sh
 ```
+*(Si prefieres compilar desde el código fuente en lugar de usar el binario precompilado, puedes ejecutar `./install.sh --compile`).*
 
 *Nota: No requiere desactivar SIP ni entrar en Modo Recuperación para usar el monitor. Si además quieres instalar el driver que reduce las temperaturas y equilibra los núcleos, puedes seguir la guía en el repositorio principal:*  
 → **[Driver y ajuste térmico para MacBook Pro 16,1 A2141](https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos)**

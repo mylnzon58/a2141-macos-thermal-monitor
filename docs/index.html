@@ -309,8 +309,9 @@
           Aplicación nativa y liviana en macOS para la <strong>MacBook Pro de 16 pulgadas de finales de 2019 con procesador Core i7-9750H</strong>. Muestra en tiempo real cómo trabajan los 6 núcleos, el consumo en Watts y las turbinas para corroborar de un vistazo cómo funcionaba tu equipo antes y cómo anda después de aplicar el ajuste térmico.
         </p>
         <div class="hero-links">
-          <a href="#instalar" class="btn-gold">Instalar en 1 minuto</a>
-          <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Ver el driver térmico complementario →</a>
+          <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.dmg" class="btn-gold">Descargar .DMG Directo</a>
+          <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-Installer.pkg">Descargar Instalador .PKG →</a>
+          <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Ver el driver térmico →</a>
         </div>
       </div>
 
@@ -346,15 +347,20 @@
     </section>
 
     <section id="instalar" class="section-block">
-      <h2>Instalación rápida en un paso</h2>
+      <h2>Descarga directa sin compilar o instalación por Terminal</h2>
       <div class="arrow-flow">
-        Clonar el repositorio  →  Ejecutar ./install.sh  →  A2141 Monitor se abre en tu pantalla y en la barra superior
+        Descargar .DMG o .PKG compilado  →  Arrastrar a Aplicaciones o doble clic  →  Abrir A2141 Monitor al instante
+      </div>
+
+      <div class="hero-links" style="margin-bottom: 24px;">
+        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.dmg" class="btn-gold">Descargar A2141Monitor (.DMG)</a>
+        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-Installer.pkg">Descargar Instalador Automático (.PKG) →</a>
+        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.zip">Descargar .ZIP →</a>
       </div>
 
       <div class="code-step">
-        <h3>Copia y pega en tu Terminal de macOS</h3>
-        <pre><code>xcode-select --install 2&gt;/dev/null || true
-git clone https://github.com/mylnzon58/a2141-macos-thermal-monitor.git
+        <h3>O bien instala por Terminal (usa el binario ya precompilado en prebuilt/)</h3>
+        <pre><code>git clone https://github.com/mylnzon58/a2141-macos-thermal-monitor.git
 cd a2141-macos-thermal-monitor
 chmod +x install.sh uninstall.sh
 ./install.sh</code></pre>
