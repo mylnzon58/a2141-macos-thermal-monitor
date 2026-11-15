@@ -223,18 +223,37 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
     [statusAccent setFill];
     NSRectFill(NSMakeRect(headerBox.origin.x, headerBox.origin.y, 5.0, headerBox.size.height));
 
-    [self drawText:@"A2141 Monitor  ·  MacBook Pro 16,1 Core i7-9750H (6 Núcleos / 12 Hilos)"
-                at:NSMakePoint(headerBox.origin.x + 18, headerBox.origin.y + 12)
+    NSImage *appLogo = [NSImage imageNamed:@"AppIcon"];
+    if (!appLogo) {
+        NSString *resPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"AppIcon.icns"];
+        if (resPath) appLogo = [[NSImage alloc] initWithContentsOfFile:resPath];
+    }
+    if (!appLogo) {
+        appLogo = [[NSImage alloc] initWithContentsOfFile:@"resources/AppIcon.icns"];
+    }
+    CGFloat textLeft = headerBox.origin.x + 18.0;
+    if (appLogo) {
+        [appLogo drawInRect:NSMakeRect(headerBox.origin.x + 14.0, headerBox.origin.y + 10.0, 52.0, 52.0)
+                   fromRect:NSZeroRect
+                  operation:NSCompositingOperationSourceOver
+                   fraction:1.0
+             respectFlipped:YES
+                      hints:nil];
+        textLeft = headerBox.origin.x + 76.0;
+    }
+
+    [self drawText:@"A2141 ThermalMonitor  ·  MacBook Pro 16,1 Core i7-9750H"
+                at:NSMakePoint(textLeft, headerBox.origin.y + 12)
               font:h1Font
              color:colorFromHex(0xF3EFEA)];
 
     NSString *statusDesc = latest.kext_loaded
-        ? [NSString stringWithFormat:@"Estado: AJUSTE ACTIVO  →  Tope por núcleo adaptativo (%u–%u MHz) · Arbitraje CPU+GPU T2 · Ciclos Ring-0: %llu",
+        ? [NSString stringWithFormat:@"Driver: A2141 ThermalBoost ACTIVO  →  Tope adaptativo (%u–%u MHz) · Arbitraje CPU+GPU · Ciclos: %llu",
            latest.core_cap_mhz[0], latest.core_cap_mhz[4], latest.kext_cycles]
         : @"Estado: MODO ORIGINAL DE FÁBRICA  →  Todos los núcleos hasta 4500 MHz · Ventiladores con curva tardía";
 
     [self drawText:statusDesc
-                at:NSMakePoint(headerBox.origin.x + 18, headerBox.origin.y + 42)
+                at:NSMakePoint(textLeft, headerBox.origin.y + 42)
               font:subFont
              color:statusAccent];
 
@@ -466,7 +485,7 @@ static AppDelegate *g_strongDelegate = nil;
     /* Prevent NSWindow from deallocating itself when closed with the red X button! */
     [window setReleasedWhenClosed:NO];
     [window setDelegate:self];
-    [window setTitle:@"A2141 Monitor — Telemetría de Núcleos, Potencia (W), Temperatura y Turbinas"];
+    [window setTitle:@"A2141 ThermalMonitor — Monitor de Núcleos, Potencia (W), Temperatura y Turbinas"];
     [window center];
     [window setMinSize:NSMakeSize(1020, 700)];
     window.backgroundColor = colorFromHex(0x0C0A08);

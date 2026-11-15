@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A2141 Monitor — Gráficas de Núcleos, Temperatura y Turbinas</title>
-  <meta name="description" content="Aplicación nativa de macOS para visualizar los 6 núcleos, gráficas de temperatura en tiempo real, turbinas y consumo en la MacBook Pro 16,1 A2141 de 2019." />
+  <title>A2141 ThermalMonitor — Monitor de Núcleos, Watts y Turbinas (MacBook Pro 16" 2019)</title>
+  <meta name="description" content="A2141 ThermalMonitor: aplicación nativa de macOS para visualizar los 6 núcleos, potencia en Watts por núcleo, gráficas de temperatura y turbinas en la MacBook Pro 16,1 A2141 de 2019." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="canonical" href="https://mylnzon58.github.io/a2141-macos-thermal-monitor/" />
   <link rel="alternate" hreflang="es" href="https://mylnzon58.github.io/a2141-macos-thermal-monitor/" />
   <link rel="alternate" hreflang="en" href="https://mylnzon58.github.io/a2141-macos-thermal-monitor/#en" />
@@ -291,12 +292,15 @@
 </head>
 <body>
   <header class="topbar">
-    <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor" class="wordmark">mylnzon58 / A2141 Monitor</a>
+    <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor" class="wordmark" style="display:flex;align-items:center;gap:12px;">
+      <img src="assets/logo-thermalmonitor.png" width="36" height="36" alt="A2141 ThermalMonitor Logo" />
+      <span>mylnzon58 / A2141 ThermalMonitor</span>
+    </a>
     <nav class="nav-row" aria-label="Navegación principal">
       <a href="#que-mide">Qué muestra</a>
-      <a href="#instalar">Instalación rápida</a>
+      <a href="#instalar">Descarga directa</a>
       <a href="#comparar">Cómo comparar</a>
-      <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Driver Térmico →</a>
+      <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Driver A2141 ThermalBoost →</a>
       <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor" class="btn-gold">Repositorio GitHub</a>
     </nav>
   </header>
@@ -304,14 +308,18 @@
   <main class="container">
     <section class="hero-grid">
       <div class="hero-copy">
-        <h1>Monitor visual de núcleos, temperatura y turbinas para MacBook A2141</h1>
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+          <img src="assets/logo-thermalmonitor.png" width="72" height="72" alt="Ícono de A2141 ThermalMonitor en macOS" />
+          <span style="color:var(--accent);font-weight:600;letter-spacing:0.04em;">A2141 THERMALMONITOR · v1.1.0</span>
+        </div>
+        <h1>Monitor de núcleos, Watts y turbinas para MacBook A2141</h1>
         <p>
-          Aplicación nativa y liviana en macOS para la <strong>MacBook Pro de 16 pulgadas de finales de 2019 con procesador Core i7-9750H</strong>. Muestra en tiempo real cómo trabajan los 6 núcleos, el consumo en Watts y las turbinas para corroborar de un vistazo cómo funcionaba tu equipo antes y cómo anda después de aplicar el ajuste térmico.
+          Aplicación nativa y liviana en macOS para la <strong>MacBook Pro de 16 pulgadas de finales de 2019 con procesador Core i7-9750H</strong>. Muestra en tiempo real la potencia en Watts y MHz de cada uno de los 6 núcleos, el consumo de CPU y gráfica AMD y las turbinas para corroborar cómo funcionaba tu equipo antes y después de aplicar el driver <strong>A2141 ThermalBoost</strong>.
         </p>
         <div class="hero-links">
-          <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.dmg" class="btn-gold">Descargar .DMG Directo</a>
-          <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-Installer.pkg">Descargar Instalador .PKG →</a>
-          <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Ver el driver térmico →</a>
+          <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-macOS.dmg" class="btn-gold">Descargar .DMG Directo</a>
+          <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-Installer.pkg">Descargar Instalador .PKG →</a>
+          <a href="https://github.com/mylnzon58/t2-macbook-pro-16-1-thermal-performance-fix-macos">Ver el driver A2141 ThermalBoost →</a>
         </div>
       </div>
 
@@ -353,9 +361,9 @@
       </div>
 
       <div class="hero-links" style="margin-bottom: 24px;">
-        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.dmg" class="btn-gold">Descargar A2141Monitor (.DMG)</a>
-        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-Installer.pkg">Descargar Instalador Automático (.PKG) →</a>
-        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141Monitor-v1.0.0-macOS-x86_64.zip">Descargar .ZIP →</a>
+        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-macOS.dmg" class="btn-gold">Descargar A2141 ThermalMonitor (.DMG)</a>
+        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-Installer.pkg">Descargar Instalador Automático (.PKG) →</a>
+        <a href="https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-macOS.zip">Descargar .ZIP →</a>
       </div>
 
       <div class="code-step">
