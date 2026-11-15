@@ -281,10 +281,17 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
         textLeft = headerBox.origin.x + 76.0;
     }
 
+#ifdef A2141_MODEL_I9
+    [self drawText:@"A2141 ThermalMonitor  ·  MacBook Pro 16,1 Core i9 (8 Núcleos / 16 Hilos)"
+                at:NSMakePoint(textLeft, headerBox.origin.y + 12)
+              font:h1Font
+             color:colorFromHex(0xF3EFEA)];
+#else
     [self drawText:@"A2141 ThermalMonitor  ·  MacBook Pro 16,1 Core i7-9750H"
                 at:NSMakePoint(textLeft, headerBox.origin.y + 12)
               font:h1Font
              color:colorFromHex(0xF3EFEA)];
+#endif
 
     NSString *statusDesc = latest.kext_loaded
         ? [NSString stringWithFormat:@"Driver: A2141 ThermalBoost ACTIVO  →  Tope adaptativo (%u–%u MHz) · Arbitraje CPU+GPU · Ciclos: %llu",
@@ -342,13 +349,13 @@ static NSColor *colorFromHex(uint32_t hex, CGFloat alpha = 1.0) {
         [self drawText:notes[i]  at:NSMakePoint(cRect.origin.x + 14, cRect.origin.y + 54) font:subFont   color:colorFromHex(0x7D756B)];
     }
 
-    // 3. SIX PHYSICAL CORES & 12 THREADS VISUAL DIE GRID (with Per-Core Watts & Actual/Ceiling MHz)
+    // 3. PHYSICAL CORES & HYPER-THREADS VISUAL DIE GRID (6C/12T i7 or 8C/16T i9)
     CGFloat coresY = 184.0;
-    CGFloat coreGap = 10.0;
-    CGFloat coreW = (w - coreGap * 5.0) / 6.0;
+    CGFloat coreGap = (A2141_MON_CORES > 6) ? 8.0 : 10.0;
+    CGFloat coreW = (w - coreGap * (double)(A2141_MON_CORES - 1)) / (double)A2141_MON_CORES;
     CGFloat coreH = 132.0;
 
-    for (int c = 0; c < 6; c++) {
+    for (int c = 0; c < A2141_MON_CORES; c++) {
         NSRect cr = NSMakeRect(pad + c * (coreW + coreGap), coresY, coreW, coreH);
         [colorFromHex(0x161310) setFill];
         NSRectFill(cr);

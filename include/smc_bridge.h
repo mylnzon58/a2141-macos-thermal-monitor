@@ -8,9 +8,17 @@
 extern "C" {
 #endif
 
+#ifdef A2141_MODEL_I9
+#define A2141_MON_CORES   8
+#define A2141_MON_THREADS 16
+#else
+#define A2141_MON_CORES   6
+#define A2141_MON_THREADS 12
+#endif
+
 typedef struct {
     double tcxc_max_c;          // PECI Max Die Temp (C)
-    double core_temp_c[6];      // Physical Cores 0..5 Temp (C)
+    double core_temp_c[A2141_MON_CORES];      // Physical Cores Temp (C)
     double gpu_temp_c;          // Radeon Pro GPU Temp (TGDD / TG0P)
     double palm_temp_c;         // Skin / Palm Rest Temp (Ts0S)
     double cpu_power_w;         // CPU Package Power (PC0R)
@@ -23,15 +31,15 @@ typedef struct {
     double fan1_actual_rpm;     // Right Fan Actual RPM (F1Ac)
     double fan0_min_rpm;        // Left Fan Min Floor RPM (F0Mn)
     double fan1_min_rpm;        // Right Fan Min Floor RPM (F1Mn)
-    double core_usage_pct[6];   // Physical Core 0..5 Usage (0..100%)
-    double thread_usage_pct[12];// Logical Thread 0..11 Usage (0..100%)
+    double core_usage_pct[A2141_MON_CORES];   // Physical Core Usage (0..100%)
+    double thread_usage_pct[A2141_MON_THREADS];// Logical Thread Usage (0..100%)
     double total_cpu_pct;       // Average CPU Usage (0..100%)
     bool   kext_loaded;         // A2141AsymmetricHWP loaded in kernel
     uint32_t kext_profile;      // 0=BURST, 1=HEAVY, 2=MANUAL
     uint64_t kext_cycles;       // Ring-0 IPI cycles executed
-    uint32_t core_cap_mhz[6];   // Active HWP ceiling per core (MHz)
-    uint32_t core_actual_mhz[6];// Real-time clock per core (MHz) from MSR 0x198
-    double   core_power_w[6];   // Real-time power per physical core (Watts)
+    uint32_t core_cap_mhz[A2141_MON_CORES];   // Active HWP ceiling per core (MHz)
+    uint32_t core_actual_mhz[A2141_MON_CORES];// Real-time clock per core (MHz) from MSR 0x198
+    double   core_power_w[A2141_MON_CORES];   // Real-time power per physical core (Watts)
 } A2141Snapshot;
 
 int  a2141_bridge_init(void);

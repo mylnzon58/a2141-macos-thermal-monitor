@@ -40,9 +40,9 @@ No requiere permisos de administrador para abrirse ni consume recursos pesados: 
 ```
 Modelo           →  MacBook Pro de 16 pulgadas de finales de 2019
 Identificador    →  MacBookPro16,1 · Chasis A2141
-Procesador       →  Intel Core i7-9750H de 6 núcleos y 12 hilos
+Procesador       →  Intel Core i7-9750H (6 núcleos / 12 hilos) — Probado en hardware real
+                    Intel Core i9-9880H / i9-9980HK (8 núcleos / 16 hilos) — Compilación dedicada i9 incluida
 Sistema          →  macOS Catalina 10.15 hasta macOS Sequoia 15 o superior
-Requisito        →  Herramientas de compilación de Xcode (xcode-select --install)
 ```
 
 ---
@@ -55,8 +55,10 @@ Ya incluimos la aplicación compilada con su ícono nativo de macOS en varios fo
   **[Descargar A2141-ThermalMonitor-v1.1.0-macOS.dmg](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-macOS.dmg)**
 - **Instalador automático de macOS (`.pkg` — Doble clic):**  
   **[Descargar A2141-ThermalMonitor-v1.1.0-Installer.pkg](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-Installer.pkg)**
-- **Archivo comprimido directo (`.zip`):**  
+- **Archivo comprimido directo Core i7 (`.zip`):**  
   **[Descargar A2141-ThermalMonitor-v1.1.0-macOS.zip](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-v1.1.0-macOS.zip)**
+- **Versión dedicada para Core i9 (8 núcleos / 16 hilos, `.dmg`):**  
+  **[Descargar A2141-ThermalMonitor-i9-v1.1.0-macOS.dmg](https://github.com/mylnzon58/a2141-macos-thermal-monitor/releases/download/v1.0.0/A2141-ThermalMonitor-i9-v1.1.0-macOS.dmg)**
 
 > **Si macOS muestra *"Apple no pudo verificar que A2141Monitor no contenga software malicioso"*:**  
 > Al ser software libre sin firma comercial paga de Apple, macOS bloquea la primera apertura de archivos descargados desde el navegador. Haz clic en **Listo**, abre **Ajustes del Sistema → Privacidad y Seguridad → Seguridad** y presiona **"Abrir de todas formas"** (o ejecuta `xattr -cr /Applications/A2141Monitor.app`).

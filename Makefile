@@ -10,9 +10,14 @@ CFLAGS := $(ARCH) -O3 -Wall -Wextra -Wno-deprecated-declarations -Iinclude
 OBJCXXFLAGS := $(ARCH) -O3 -fobjc-arc -Wall -Wextra -Wno-deprecated-declarations -Iinclude
 LDFLAGS := $(ARCH) -framework Cocoa -framework IOKit -framework QuartzCore -framework CoreFoundation -lpthread
 
-.PHONY: all clean run
+.PHONY: all i9 clean run
 
 all: $(MACOS_DIR)/$(APP_NAME)
+
+i9:
+	@$(MAKE) BUILD_DIR=build-i9 \
+		CFLAGS="$(CFLAGS) -DA2141_MODEL_I9=1" \
+		OBJCXXFLAGS="$(OBJCXXFLAGS) -DA2141_MODEL_I9=1" all
 
 $(MACOS_DIR)/$(APP_NAME): src/A2141MonitorApp.mm src/smc_bridge.c include/smc_bridge.h resources/Info.plist resources/AppIcon.icns
 	@mkdir -p $(MACOS_DIR) $(APP_BUNDLE)/Contents/Resources
@@ -28,4 +33,4 @@ run: all
 	open $(APP_BUNDLE)
 
 clean:
-	rm -rf $(BUILD_DIR) electron-app/out
+	rm -rf $(BUILD_DIR) build-i9 electron-app/out
