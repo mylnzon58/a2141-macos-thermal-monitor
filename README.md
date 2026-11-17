@@ -97,8 +97,9 @@ Si deseas quitar la aplicación en cualquier momento:
 
 ## Apoyo al proyecto y contacto
 
-Comparto esta herramienta de manera libre y con humildad, esperando que ayude a entender y medir de forma visual el comportamiento térmico de esta MacBook. Si te resulta útil en tu día a día:
+Comparto esta herramienta de manera libre y con humildad, esperando que ayude a entender y medir de forma visual el comportamiento térmico de esta MacBook. Si te resultó útil, **dejar una estrella (Star) en el repositorio** ayuda mucho a que más personas con este modelo puedan encontrarla:
 
+- **Estrella en GitHub:** Presiona **Star** arriba a la derecha en este repositorio
 - **GitHub Sponsors:** [github.com/sponsors/mylnzon58](https://github.com/sponsors/mylnzon58)
 - **Patreon:** [patreon.com/JuanjoClassic](https://www.patreon.com/JuanjoClassic)
 - **Invitar un Tecito:** [tecito.app/juanjoclassic](https://tecito.app/juanjoclassic)
